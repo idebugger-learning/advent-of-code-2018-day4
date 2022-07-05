@@ -6,18 +6,7 @@ use nom::multi::separated_list1;
 use nom::sequence::delimited;
 use nom::IResult;
 
-#[derive(Debug)]
-pub enum Event {
-    BeginsShift(u32),
-    FallsAsleep,
-    WakesUp,
-}
-
-#[derive(Debug)]
-pub struct DutyRecord {
-    pub datetime: NaiveDateTime,
-    pub event: Event,
-}
+use crate::duty_record::{DutyRecord, Event};
 
 pub fn parse_input(input: &str) -> IResult<&str, Vec<DutyRecord>> {
     separated_list1(tag("\n"), parse_row)(input)
